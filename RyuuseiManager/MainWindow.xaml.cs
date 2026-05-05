@@ -326,7 +326,7 @@ namespace RyuuseiManager
                 };
                 if (dlg.ShowDialog() == CommonFileDialogResult.Ok)
                 {
-                    if (!TrySaveFile(Path.Combine(dlg.FileName, $"data0{GameGen}Slot.bin"), rawSaveData))
+                    if (!TrySaveFile(Path.Combine(dlg.FileName, $"data0{GameGen}Slot.bin"), BinaryMagic.Processor.PopulateToSwitchSave(rawSaveData, GameGen / 10)))
                     {
                         MessageBox.Show(this, (string)Application.Current.Resources["Msg_UnableToSave"], (string)Application.Current.Resources["Msg_Info"]);
                     }

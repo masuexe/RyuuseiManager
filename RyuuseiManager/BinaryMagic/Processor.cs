@@ -1,4 +1,6 @@
 ﻿using System.Text;
+using System.Windows;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace RyuuseiManager.BinaryMagic
 {
@@ -70,6 +72,50 @@ namespace RyuuseiManager.BinaryMagic
                 }
             }
             return source;
+        }
+
+        public static byte[] PopulateToSwitchSave(ReadOnlySpan<byte> blob, int gameID)
+        {
+            byte[] pattern;
+            byte[] footerMagic;
+            byte[] filler;
+            switch (gameID)
+            {
+                case 1:
+                    pattern = PlatformMagic.SF1;
+                    footerMagic = FooterMagic.SF1.SwitchFooterMagic;
+                    filler = new byte[] { 0xBF, 0x75, 0xED, 0x75 }; break;
+                case 2:
+                    pattern = PlatformMagic.SF2;
+                    footerMagic = FooterMagic.SF2.SwitchFooterMagic;
+                    filler = new byte[] { 0x04, 0x00, 0x00, 0x00 }; break;
+                case 3:
+                    pattern = PlatformMagic.SF3;
+                    footerMagic = FooterMagic.SF3.SwitchFooterMagic;
+                    filler = new byte[] { 0x00, 0x00, 0x00, 0x00 }; break;
+                default:
+                    return blob.ToArray();
+            }
+            byte[] source = blob.ToArray();
+            byte[] switchSave = Array.Empty<byte>();
+            int patternIndex = blob.IndexOf(pattern);
+            if (patternIndex < 0) return source;
+            else
+            {
+                var before = blob.Slice(0, patternIndex).ToArray();
+                var after = blob.Slice(patternIndex).ToArray();
+
+                switchSave = HeaderMagic.Switch
+                    .Concat(before)
+                    .Concat(filler)
+                    .Concat(after)
+                    .Concat(FooterMagic.SwitchSaveFooterMagic)
+                    .Concat(gameID == 1 ? Array.Empty<byte>() : new byte[] { 0x04, 0x00, 0x00, 0x00 })
+                    .Concat(footerMagic)
+                    .ToArray();
+            }
+            byte[] murmurChecksum = BitConverter.GetBytes(MurmurHash3.Hash32(switchSave, 0xFFFFFFFF));
+            return switchSave.Concat(murmurChecksum).ToArray();
         }
 
         public static int GetMugshotID(ReadOnlySpan<byte> blob, int gameID)
