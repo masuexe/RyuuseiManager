@@ -316,6 +316,7 @@ namespace RyuuseiManager
                 var dlg = new CommonSaveFileDialog
                 {
                     Title = (string)Application.Current.Resources["Msg_ExportSave"],
+                    DefaultFileName = $"data0{GameGen}Slot.bin",
                     DefaultExtension = "bin",
                     EnsureValidNames = true,
                     EnsurePathExists = true
@@ -323,6 +324,7 @@ namespace RyuuseiManager
                 dlg.Filters.Add(new CommonFileDialogFilter("", "*.bin"));
                 if (dlg.ShowDialog() == CommonFileDialogResult.Ok)
                 {
+                    rawSaveData = BinaryMagic.Processor.RepopulateFooter(rawSaveData, GameGen);
                     if (!TrySaveFile(Path.Combine(dlg.FileName), BinaryMagic.Processor.PopulateToSwitchSave(rawSaveData, GameGen / 10)))
                     {
                         MessageBox.Show(this, (string)Application.Current.Resources["Msg_UnableToSave"], (string)Application.Current.Resources["Msg_Info"]);
