@@ -65,8 +65,8 @@
     <system:String x:Key="Manual">Especificar manualmente...</system:String>
     <system:String x:Key="LocateSteamPath">Localize o caminho do Steam que contém o diretório "userdata".</system:String>
     <system:String x:Key="Msg_InvalidSteamPath">Este não parece ser um caminho válido para o Steam.</system:String>
-    <system:String x:Key="Chk_SubAccountFamilyShare">Subconta familiar do Steam</system:String>
-    <system:String x:Key="Tips_SubAccountFamilyShare">Se esta conta estiver jogando este jogo através do Compartilhamento Familiar, marque esta opção; caso contrário, os dados salvos importados não poderão ser lidos pelo jogo.</system:String>
+    <system:String x:Key="Msg_PreferredContentLanguage">Idioma preferido</system:String>
+    <system:String x:Key="Item_SameAsUI">Same as UI (inglês)</system:String>
     <system:String x:Key="JPVersion">Versão Japonesa</system:String>
     <system:String x:Key="USVersion">Versão Americana</system:String>
     <system:String x:Key="EUVersion">Versão Europeia</system:String>

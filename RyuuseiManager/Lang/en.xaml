@@ -65,8 +65,8 @@
     <system:String x:Key="Manual">Locate Manually...</system:String>
     <system:String x:Key="LocateSteamPath">Please locate Steam path that contains userdata directory.</system:String>
     <system:String x:Key="Msg_InvalidSteamPath">This does not appear to be a valid Steam path.</system:String>
-    <system:String x:Key="Chk_SubAccountFamilyShare">Steam Family Subaccount</system:String>
-    <system:String x:Key="Tips_SubAccountFamilyShare">If this account is playing this game through Family Sharing, please check this option; otherwise, imported save data will not be able to be read by the game.</system:String>
+    <system:String x:Key="Msg_PreferredContentLanguage">Preferred Language</system:String>
+    <system:String x:Key="Item_SameAsUI">Same as UI</system:String>
     <system:String x:Key="JPVersion">Japanese Version</system:String>
     <system:String x:Key="USVersion">US Version</system:String>
     <system:String x:Key="EUVersion">European Version</system:String>
