@@ -66,7 +66,7 @@ namespace RyuuseiManager
                 GetSaveDataFromDB(gen);
             }
             ComboSaveName.IsEnabled = true;
-            ButtonCreateSave.IsEnabled = true;
+            ButtonCreateSave.IsEnabled = false;
             ButtonDuplicate.IsEnabled = false;
             ButtonDeleteSave.IsEnabled = false;
             ButtonRenameSave.IsEnabled = false;
