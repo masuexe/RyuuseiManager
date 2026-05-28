@@ -12,5 +12,14 @@ namespace RyuuseiManager
 
             return new BitmapImage(new Uri(uri, UriKind.Absolute));
         }
+
+        public static BitmapImage GetSF3CardImage(int index)
+        {
+            if (index < 1 || index > 1339 || (index > 397 && index < 1285) || index == 1296) index = 1;
+            string fileName = $"{index:D4}.png";
+            string uri = $"pack://application:,,,/GameResource;component/Resources/BattleCard/SF3/{fileName}";
+
+            return new BitmapImage(new Uri(uri, UriKind.Absolute));
+        }
     }
 }

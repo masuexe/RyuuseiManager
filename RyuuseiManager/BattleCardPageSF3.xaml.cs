@@ -1,6 +1,12 @@
 ﻿using RyuuseiManager.Classes;
+using RyuuseiManager.ImageGenerator;
 using RyuuseiManager.Library.SF3;
+using System.Security.Policy;
 using System.Windows.Controls;
+using System.Windows.Forms;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace RyuuseiManager
 {
@@ -53,12 +59,60 @@ namespace RyuuseiManager
             }
             foreach (var i in battleCards)
             {
-                BattleCardList.Items.Add($"{BattleCardName.GetBattleCardName(i.Key, ProfileLanguage)} *{i.Value}");
+                int damage = BattleCardAttributes.GetDamage(i.Key);
+                var entry = new ListEntry
+                {
+                    Image = GameResourceRetriver.GetSF3CardImage((int)i.Key),
+                    DamageImage = DamageTagGenerator.GetDamageTag(damage, GetCardClass(i.Key)),
+                    Label = $"{BattleCardName.GetBattleCardName(i.Key, ProfileLanguage)}",
+                    Quantity = $"x {i.Value}",
+                    IsIllegal = IsIllegalCard(i.Key),
+                    CardClass = GetCardClass(i.Key)
+                };
+                BattleCardList.Items.Add(entry);
             }
             Dictionary<BattleCard, int> galaxyAdvances = GaCombo.GetPossibleCombos(battleCards);
             foreach (var i in galaxyAdvances)
             {
-                GalaxyAdvanceList.Items.Add($"{BattleCardName.GetBattleCardName(i.Key, ProfileLanguage)} *{i.Value}");
+                int damage = BattleCardAttributes.GetDamage(i.Key);
+                List<BattleCard> gaCombo = GaCombo.gaCombos[i.Key];
+                var entry = new ListEntry
+                {
+                    Image = GameResourceRetriver.GetSF3CardImage((int)i.Key),
+                    DamageImage = DamageTagGenerator.GetDamageTag(damage, GetCardClass(i.Key)),
+                    GaPart0 = GameResourceRetriver.GetSF3CardImage((int)gaCombo[0]),
+                    GaPart1 = GameResourceRetriver.GetSF3CardImage((int)gaCombo[1]),
+                    GaPart2 = GameResourceRetriver.GetSF3CardImage((int)gaCombo[2]),
+                    Label = $"{BattleCardName.GetBattleCardName(i.Key, ProfileLanguage)}",
+                    Quantity = $"x {i.Value}",
+                    CardClass = GetCardClass(i.Key)
+                };
+                GalaxyAdvanceList.Items.Add(entry);
+            }
+        }
+
+        private bool IsIllegalCard(BattleCard battleCard)
+        {
+            return ((int)battleCard > 207 && (int)battleCard < 1286);
+        }
+
+        private int GetCardClass(BattleCard battleCard)
+        {
+            if (((int)battleCard > 150 && (int)battleCard < 196) || // Library
+                ((int)battleCard > 323 && (int)battleCard < 387) || // Illegal
+                ((int)battleCard > 1296 && (int)battleCard < 1328)) // GA
+            {
+                return 1; // MEGA
+            }
+            else if (((int)battleCard > 195 && (int)battleCard < 208) || // Library
+                ((int)battleCard > 386 && (int)battleCard < 398) || // Illegal
+                ((int)battleCard > 1327 && (int)battleCard < 1336)) // GA
+            {
+                return 2; // GIGA
+            }
+            else
+            {
+                return 0; // STANDARD
             }
         }
 
@@ -67,5 +121,21 @@ namespace RyuuseiManager
             public string Text { get; set; }
             public int Value { get; set; }
         }
+
+        public class ListEntry
+        {
+            public BitmapImage Image { get; set; }
+            public BitmapImage GaPart0 { get; set; }
+            public BitmapImage GaPart1 { get; set; }
+            public BitmapImage GaPart2 { get; set; }
+            public BitmapSource DamageImage { get; set; }
+            public int PixelWidth => Image.PixelWidth;
+            public int PixelHeight => Image.PixelHeight;
+            public bool IsIllegal { get; set; }
+            public string Label { get; set; }
+            public string Quantity { get; set; }
+            public int CardClass { get; set; }
+        }
+
     }
 }

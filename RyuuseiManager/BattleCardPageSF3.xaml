@@ -39,12 +39,182 @@
             </Grid.ColumnDefinitions>
 
             <Grid Grid.Column="0">
-                <ListBox x:Name="BattleCardList">
+                <ListBox x:Name="BattleCardList" 
+                         HorizontalContentAlignment="Stretch">
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="Background" Value="Transparent"/>
+                            <Setter Property="Focusable" Value="False"/>
+                            <Setter Property="IsSelected" Value="False"/>
+                            <Setter Property="IsHitTestVisible" Value="False"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Setter Property="BorderBrush" Value="Transparent"/>
+                                </Trigger>
+                                <DataTrigger Binding="{Binding CardClass}" Value="0">
+                                    <Setter Property="Background" Value="#FFFF7700"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding CardClass}" Value="1">
+                                    <Setter Property="Background" Value="#FF0050FF"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding CardClass}" Value="2">
+                                    <Setter Property="Background" Value="#FFFF0000"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="4" SnapsToDevicePixels="True" UseLayoutRounding="False">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Grid Grid.Column="0" Width="72" Height="54">
+                                    <Image Width="72"
+                                           Height="54"
+                                           Stretch="UniformToFill"
+                                           Source="{Binding Image}" />
+                                    <Image Width="32"
+                                           Height="14"
+                                           Source="{Binding DamageImage}"
+                                           Stretch="UniformToFill"
+                                           HorizontalAlignment="Right"
+                                           VerticalAlignment="Bottom"
+                                           Margin="0"/>
+                                </Grid>
+
+                                <StackPanel Grid.Column="1"
+                                            Margin="8,0,0,0"
+                                            VerticalAlignment="Center">
+
+                                    <TextBlock Text="{Binding Label}"
+                                               FontSize="16"
+                                               TextWrapping="Wrap">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Setter Property="Foreground" Value="White"/>
+                                                <Setter Property="FontWeight" Value="Normal"/>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding IsIllegal}" Value="True">
+                                                        <Setter Property="Foreground" Value="#FF80FFFF"/>
+                                                        <Setter Property="FontWeight" Value="Bold"/>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+
+
+                                </StackPanel>
+
+                                <TextBlock Grid.Column="2"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Right"
+                                           Margin="8,0,0,0"
+                                           FontSize="20"
+                                           Foreground="White"
+                                           Text="{Binding Quantity}" />
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
                 </ListBox>
             </Grid>
 
             <Grid Grid.Column="1">
-                <ListBox x:Name="GalaxyAdvanceList">
+                <ListBox x:Name="GalaxyAdvanceList"
+                         HorizontalContentAlignment="Stretch">
+                    <ListBox.ItemContainerStyle>
+                        <Style TargetType="ListBoxItem">
+                            <Setter Property="Background" Value="Transparent"/>
+                            <Setter Property="Focusable" Value="False"/>
+                            <Setter Property="IsSelected" Value="False"/>
+                            <Setter Property="IsHitTestVisible" Value="False"/>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="Transparent"/>
+                                    <Setter Property="BorderBrush" Value="Transparent"/>
+                                </Trigger>
+                                <DataTrigger Binding="{Binding CardClass}" Value="0">
+                                    <Setter Property="Background" Value="#FFFF7700"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding CardClass}" Value="1">
+                                    <Setter Property="Background" Value="#FF0050FF"/>
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding CardClass}" Value="2">
+                                    <Setter Property="Background" Value="#FFFF0000"/>
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </ListBox.ItemContainerStyle>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid Margin="4" SnapsToDevicePixels="True" UseLayoutRounding="False">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="24"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Grid Grid.Column="0" Width="72" Height="54">
+                                    <Image Width="72"
+                                           Height="54"
+                                           Stretch="UniformToFill"
+                                           Source="{Binding Image}" />
+                                    <Image Width="32"
+                                           Height="14"
+                                           Source="{Binding DamageImage}"
+                                           Stretch="UniformToFill"
+                                           HorizontalAlignment="Right"
+                                           VerticalAlignment="Bottom"
+                                           Margin="0"/>
+                                </Grid>
+
+
+                                <StackPanel Grid.Column="1"
+                                            Margin="8,0,0,0"
+                                            VerticalAlignment="Center">
+
+                                    <TextBlock Text="{Binding Label}"
+                                               FontSize="16"
+                                               TextWrapping="Wrap"
+                                               Foreground="White" />
+                                </StackPanel>
+
+                                <TextBlock Grid.Column="2"
+                                           VerticalAlignment="Center"
+                                           HorizontalAlignment="Right"
+                                           Margin="8,0,0,0"
+                                           FontSize="20"
+                                           Foreground="White"
+                                           Text="{Binding Quantity}" />
+
+                                <Grid Grid.Column="3" Width="24" Height="54" Margin="5,0,0,0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="18"/>
+                                        <RowDefinition Height="18"/>
+                                        <RowDefinition Height="18"/>
+                                    </Grid.RowDefinitions>
+                                    <Image Grid.Row="0" Width="24"
+                                           Height="18"
+                                           Stretch="UniformToFill"
+                                           Source="{Binding GaPart0}"/>
+                                    <Image Grid.Row="1" Width="24"
+                                           Height="18"
+                                           Stretch="UniformToFill"
+                                           Source="{Binding GaPart1}" />
+                                    <Image Grid.Row="2" Width="24"
+                                           Height="18"
+                                           Stretch="UniformToFill"
+                                           Source="{Binding GaPart2}" />
+                                </Grid>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
                 </ListBox>
             </Grid>
         </Grid>
